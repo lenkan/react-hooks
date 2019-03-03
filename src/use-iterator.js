@@ -1,5 +1,5 @@
 // @ts-check
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 /**
  * @param {() => AsyncIterableIterator<T>} iterator
@@ -9,14 +9,22 @@ import { useState, useEffect } from 'react'
  */
 export function useIterator (iterator, defaultValue) {
   const [state, setState] = useState(defaultValue)
+  const abort = useRef(false)
 
   async function start () {
     for await (const next of iterator()) {
+      if (abort.current) {
+        break
+      }
+
       setState(s => ({ ...s, ...next }))
     }
   }
 
-  useEffect(() => { start() }, [])
+  useEffect(() => {
+    start()
+    return () => { abort.current = true }
+  }, [])
 
   return state
 }
