@@ -1,12 +1,14 @@
 {
-  "name": "react-hooks",
+  "name": "@lenkan/react-hooks",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "test": "jest"
   },
-  "author": "",
+  "author": "lenkan",
   "license": "ISC",
+  "repository": "https://github.com/lenkan/react-hooks",
+  "directories": {},
   "peerDependencies": {
     "react": "^16.8.0"
   },
