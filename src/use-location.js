@@ -64,10 +64,27 @@ export function useLocation () {
    * @param {React.MouseEvent<HTMLAnchorElement, MouseEvent>} event
    */
   function handleClick (event) {
-    const { href, target } = event.currentTarget
+    const { search, pathname, target } = event.currentTarget
     if (!target) {
       event.preventDefault()
-      push(href)
+      push(`${pathname}${search}`)
+    }
+  }
+
+  /**
+   * Creates props that can be used in an anchor element
+   * @param {string} to
+   *
+   * @example
+   * function Link() {
+   *   const { link } = useLocation()
+   *   return <a {...link('/foo?bar=baz')}>link</a>
+   * }
+   */
+  function link (to) {
+    return {
+      href: to,
+      onClick: handleClick
     }
   }
 
@@ -76,6 +93,7 @@ export function useLocation () {
     replace,
     pathname,
     search,
-    handleClick
+    handleClick,
+    link
   }
 }

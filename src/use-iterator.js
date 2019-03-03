@@ -12,7 +12,7 @@ export function useIterator (iterator, defaultValue) {
 
   async function start () {
     for await (const next of iterator()) {
-      setState({ ...state, ...next })
+      setState(s => ({ ...s, ...next }))
     }
   }
 
